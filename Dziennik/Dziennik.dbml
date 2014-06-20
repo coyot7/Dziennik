@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Dziennik" Class="DziennikDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=USER-KOMP;Initial Catalog=Dziennik;Integrated Security=True" SettingsObjectName="Dziennik.Properties.Settings" SettingsPropertyName="DziennikConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Nauczyciel" Member="Nauczyciels">
+    <Type Name="Nauczyciel">
+      <Column Name="IdNauczyciel" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Imie" Type="System.String" DbType="NChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="Nazwisko" Type="System.String" DbType="NChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="Przedmiot" Type="System.String" DbType="NChar(30) NOT NULL" CanBeNull="false" />
+      <Association Name="Nauczyciel_Ocena" Member="Ocenas" ThisKey="IdNauczyciel" OtherKey="IdNauczyciel" Type="Ocena" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Ocena" Member="Ocenas">
+    <Type Name="Ocena">
+      <Column Name="IdOcena" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IdNauczyciel" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IdUczen" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Stopien" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="Data" Type="System.DateTime" DbType="SmallDateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Opis" Type="System.String" DbType="NChar(50)" CanBeNull="true" />
+      <Column Name="Poprawa" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="Ocena_PoprawaOceny" Member="PoprawaOcenies" ThisKey="IdOcena" OtherKey="IdOcena" Type="PoprawaOceny" />
+      <Association Name="Nauczyciel_Ocena" Member="Nauczyciel" ThisKey="IdNauczyciel" OtherKey="IdNauczyciel" Type="Nauczyciel" IsForeignKey="true" />
+      <Association Name="Uczen_Ocena" Member="Uczen" ThisKey="IdUczen" OtherKey="IdUczen" Type="Uczen" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PoprawaOceny" Member="PoprawaOcenies">
+    <Type Name="PoprawaOceny">
+      <Column Name="IdPoprawaOceny" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IdOcena" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="StopienPoprawiony" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="Data" Type="System.DateTime" DbType="SmallDateTime NOT NULL" CanBeNull="false" />
+      <Association Name="Ocena_PoprawaOceny" Member="Ocena" ThisKey="IdOcena" OtherKey="IdOcena" Type="Ocena" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Uczen" Member="Uczens">
+    <Type Name="Uczen">
+      <Column Name="IdUczen" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Imie" Type="System.String" DbType="NChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="Nazwisko" Type="System.String" DbType="NChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="Klasa" Type="System.String" DbType="NChar(10) NOT NULL" CanBeNull="false" />
+      <Association Name="Uczen_Ocena" Member="Ocenas" ThisKey="IdUczen" OtherKey="IdUczen" Type="Ocena" />
+    </Type>
+  </Table>
+</Database>
